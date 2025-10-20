@@ -344,6 +344,12 @@
                 <button id="wipeDayBtn">Wipe</button>
                 <p style="margin-top:5px; font-size:0.9em; color:#888;">This will remove all votes and history for the selected day.</p>
             </div>`;
+
+      // Button to restart the entire voting cycle back to Day 1
+      html += `<div style="margin-top:20px;">
+                <button id="restartCycleBtn">Start Over from Day 1</button>
+                <p style="margin-top:5px; font-size:0.9em; color:#888;">This will clear all votes and history and reset the app to Day 1. Use this when you want to begin a new voting cycle after Day 3.</p>
+            </div>`;
       // Logout/Back buttons
       html += `<div style="margin-top:20px;">
                 <button id="adminLogoutBtn">Log out</button>
@@ -506,6 +512,35 @@
         localStorage.removeItem(`voted_${selectedDay}`);
         saveState(state);
         flashMessage = { type: 'success', text: `${selectedDay.replace('day','Day ')} results wiped successfully.` };
+        renderApp();
+      });
+
+      // Event handler for restarting the entire voting cycle
+      document.getElementById('restartCycleBtn').addEventListener('click', function () {
+        if (!confirm('Are you sure you want to start over from Day 1? This will remove all votes, history, and reset everything.')) {
+          return;
+        }
+        // Reset all player votes for all days
+        ['day1','day2','day3'].forEach((dKey) => {
+          state.players.forEach((p) => {
+            p.votes[dKey] = 0;
+          });
+        });
+        // Clear history for all days
+        state.history = { day1: [], day2: [], day3: [] };
+        // Reset status for all days
+        state.status = {
+          day1: { closed: false, published: false },
+          day2: { closed: false, published: false },
+          day3: { closed: false, published: false },
+        };
+        // Set current day back to 1
+        state.currentDay = 1;
+        // Clear all vote flags
+        clearAllVoteFlags();
+        // Persist changes
+        saveState(state);
+        flashMessage = { type: 'success', text: 'Voting cycle has been reset to Day 1.' };
         renderApp();
       });
     }
