@@ -332,6 +332,18 @@
                 <button id="resetRoundBtn">Reset Round &amp; Archive Results</button>
                 <p style="margin-top:5px; font-size:0.9em; color:#888;">Resetting will save the top 5 for the current day and start the next round. After Day 3, votes for Day 3 will simply be cleared.</p>
             </div>`;
+
+      // Section for wiping results of a specific day
+      html += `<div style="margin-top:20px;">
+                <label style="display:block;margin-bottom:5px;">Wipe Day Results:</label>
+                <select id="wipeDaySelect">
+                    <option value="day1">Day 1</option>
+                    <option value="day2">Day 2</option>
+                    <option value="day3">Day 3</option>
+                </select>
+                <button id="wipeDayBtn">Wipe</button>
+                <p style="margin-top:5px; font-size:0.9em; color:#888;">This will remove all votes and history for the selected day.</p>
+            </div>`;
       // Logout/Back buttons
       html += `<div style="margin-top:20px;">
                 <button id="adminLogoutBtn">Log out</button>
@@ -471,6 +483,29 @@
       });
       document.getElementById('returnToVote').addEventListener('click', function () {
         adminLoggedIn = false;
+        renderApp();
+      });
+
+      // Event handler for wiping day results
+      document.getElementById('wipeDayBtn').addEventListener('click', function () {
+        const select = document.getElementById('wipeDaySelect');
+        const selectedDay = select.value; // e.g. "day1"
+        if (!selectedDay) return;
+        if (!confirm(`Are you sure you want to wipe all votes and history for ${selectedDay.replace('day','Day ')}? This action cannot be undone.`)) {
+          return;
+        }
+        // Clear votes for that day
+        state.players.forEach((p) => {
+          p.votes[selectedDay] = 0;
+        });
+        // Clear history for that day
+        state.history[selectedDay] = [];
+        // Reset status for that day
+        state.status[selectedDay] = { closed: false, published: false };
+        // Clear vote flags so users can vote again for that day
+        localStorage.removeItem(`voted_${selectedDay}`);
+        saveState(state);
+        flashMessage = { type: 'success', text: `${selectedDay.replace('day','Day ')} results wiped successfully.` };
         renderApp();
       });
     }
