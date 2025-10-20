@@ -345,10 +345,12 @@
                 <p style="margin-top:5px; font-size:0.9em; color:#888;">This will remove all votes and history for the selected day.</p>
             </div>`;
 
-      // Button to restart the entire voting cycle back to Day 1
+      // Buttons to restart the voting cycle from a chosen day
       html += `<div style="margin-top:20px;">
-                <button id="restartCycleBtn">Start Over from Day 1</button>
-                <p style="margin-top:5px; font-size:0.9em; color:#888;">This will clear all votes and history and reset the app to Day 1. Use this when you want to begin a new voting cycle after Day 3.</p>
+                <button id="restartDay1Btn">Start Over from Day 1</button>
+                <button id="restartDay2Btn" style="margin-left:10px;">Start Over from Day 2</button>
+                <button id="restartDay3Btn" style="margin-left:10px;">Start Over from Day 3</button>
+                <p style="margin-top:5px; font-size:0.9em; color:#888;">These buttons will clear all votes and history and reset the app to the selected day. Use them when you want to begin a new voting cycle at that day.</p>
             </div>`;
       // Logout/Back buttons
       html += `<div style="margin-top:20px;">
@@ -515,18 +517,15 @@
         renderApp();
       });
 
-      // Event handler for restarting the entire voting cycle
-      document.getElementById('restartCycleBtn').addEventListener('click', function () {
-        if (!confirm('Are you sure you want to start over from Day 1? This will remove all votes, history, and reset everything.')) {
-          return;
-        }
-        // Reset all player votes for all days
+      // Handler factory to reset and set current day
+      function restartToDay(dayNumber) {
+        // Reset all votes for all days
         ['day1','day2','day3'].forEach((dKey) => {
           state.players.forEach((p) => {
             p.votes[dKey] = 0;
           });
         });
-        // Clear history for all days
+        // Clear history
         state.history = { day1: [], day2: [], day3: [] };
         // Reset status for all days
         state.status = {
@@ -534,13 +533,29 @@
           day2: { closed: false, published: false },
           day3: { closed: false, published: false },
         };
-        // Set current day back to 1
-        state.currentDay = 1;
-        // Clear all vote flags
+        // Set current day
+        state.currentDay = dayNumber;
+        // Clear vote flags so users can vote again
         clearAllVoteFlags();
-        // Persist changes
         saveState(state);
+      }
+      // Event handlers for restarting cycles to Day 1, 2, or 3
+      document.getElementById('restartDay1Btn').addEventListener('click', function () {
+        if (!confirm('Are you sure you want to start over from Day 1? This will remove all votes, history, and reset everything.')) return;
+        restartToDay(1);
         flashMessage = { type: 'success', text: 'Voting cycle has been reset to Day 1.' };
+        renderApp();
+      });
+      document.getElementById('restartDay2Btn').addEventListener('click', function () {
+        if (!confirm('Are you sure you want to start over from Day 2? This will remove all votes, history, and reset everything.')) return;
+        restartToDay(2);
+        flashMessage = { type: 'success', text: 'Voting cycle has been reset to Day 2.' };
+        renderApp();
+      });
+      document.getElementById('restartDay3Btn').addEventListener('click', function () {
+        if (!confirm('Are you sure you want to start over from Day 3? This will remove all votes, history, and reset everything.')) return;
+        restartToDay(3);
+        flashMessage = { type: 'success', text: 'Voting cycle has been reset to Day 3.' };
         renderApp();
       });
     }
