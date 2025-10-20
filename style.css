@@ -1,0 +1,152 @@
+/*
+ * Stylesheet for the standalone elimination voting application.
+ *
+ * Uses the colour palette specified by the user:
+ *   - Primary dark grey (#2b2b2b) for the page background
+ *   - Secondary dark grey (#3b3b3b/#444444) for cards and alternating table rows
+ *   - Vivid accent orange (#ff5300) for buttons, links and highlights
+ *   - White text for readability on dark backgrounds
+ */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    background-color: #ffffff; /* light background */
+    color: #333333; /* dark text */
+    line-height: 1.5;
+}
+
+header {
+    background-color: #ff5300;
+    padding: 20px;
+    text-align: center;
+    color: #ffffff;
+    border-radius: 0 0 10px 10px;
+    font-weight: 600;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+/* Card component */
+.card {
+    background-color: #f9f9f9;
+    border: 1px solid #e5e5e5;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #333333;
+}
+
+form ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+ .checkbox input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    accent-color: #ff5300;
+ }
+
+input[type="submit"],
+button {
+    background-color: #ff5300;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background-color: #e24a00;
+}
+
+input[type="text"],
+input[type="password"],
+select {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #cccccc;
+    margin-right: 10px;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: #333333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+}
+
+tr:nth-child(odd) {
+    background-color: #fafafa;
+}
+
+tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+a {
+    color: #ff5300;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #e24a00;
+}
+
+/* Small utility class for hidden elements */
+.hidden {
+    display: none;
+}
+
+/* Notification styling */
+/* Flash message */
+.message {
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    background-color: #f5f5f5;
+    border-left: 4px solid #ccc;
+    color: #333333;
+}
+
+.message.success {
+    border-left-color: #2ecc71; /* green accent */
+}
+
+.message.error {
+    border-left-color: #e24a00;
+}

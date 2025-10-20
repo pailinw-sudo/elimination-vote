@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Already Voted{% endblock %}
+
+{% block header %}Oops!{% endblock %}
+
+{% block content %}
+<div class="card">
+    <p>You have already voted for this round. Each player may only vote once per day.</p>
+    <p><a href="{{ url_for('results') }}" class="link-light">See the current standings</a></p>
+    <p><a href="{{ url_for('index') }}" class="link-light">Return to vote page</a></p>
+</div>
+{% endblock %}

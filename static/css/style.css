@@ -1,0 +1,131 @@
+/*
+ * Global styles for the voting web app
+ *
+ * The palette is based around three core colours as specified by the user:
+ * - Accent orange: #ff5300
+ * - Primary dark grey: #2b2b2b
+ * - Text white: #ffffff
+ */
+
+/* Base reset */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #2b2b2b; /* dark grey */
+    color: #ffffff; /* white text */
+    line-height: 1.5;
+}
+
+header {
+    background-color: #ff5300; /* accent orange */
+    padding: 20px;
+    text-align: center;
+    color: #ffffff;
+    border-radius: 0 0 10px 10px;
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.card {
+    background-color: #3b3b3b;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+form ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.checkbox input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    accent-color: #ff5300;
+}
+
+input[type="submit"],
+button {
+    background-color: #ff5300;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background-color: #e24a00;
+}
+
+input[type="text"],
+input[type="password"],
+select {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: none;
+    margin-right: 10px;
+    font-size: 14px;
+    background-color: #4a4a4a;
+    color: #ffffff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #444444;
+}
+
+tr:nth-child(odd) {
+    background-color: #444444;
+}
+
+tr:nth-child(even) {
+    background-color: #3b3b3b;
+}
+
+a {
+    color: #ff5300;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #e24a00;
+}
+
+/* Utility class for light links on dark backgrounds */
+.link-light {
+    color: #ff5300;
+}
+
+.link-light:hover {
+    color: #e24a00;
+}

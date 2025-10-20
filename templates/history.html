@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Voting History{% endblock %}
+
+{% block header %}Voting History{% endblock %}
+
+{% block content %}
+<div class="card">
+    <p>Historical top five results for each day.</p>
+    {% for day, results in history.items() %}
+        <h3 style="margin-top:20px;">{{ day|capitalize }}</h3>
+        {% if results %}
+            <table class="results-table" style="width:100%; border-collapse:collapse; color:white;">
+                <thead>
+                    <tr>
+                        <th style="text-align:left; padding:8px;">Rank</th>
+                        <th style="text-align:left; padding:8px;">Name</th>
+                        <th style="text-align:left; padding:8px;">Votes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in results %}
+                    <tr style="background-color:{% if loop.index0 % 2 == 0 %}#444{% else %}#3b3b3b{% endif %};">
+                        <td style="padding:8px;">{{ loop.index }}</td>
+                        <td style="padding:8px;">{{ item.name }}</td>
+                        <td style="padding:8px;">{{ item.votes }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No results recorded yet.</p>
+        {% endif %}
+    {% endfor %}
+    <p style="margin-top:20px;"><a href="{{ url_for('index') }}" class="link-light">Back to voting</a></p>
+</div>
+{% endblock %}

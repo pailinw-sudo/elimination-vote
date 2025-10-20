@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block header %}Admin Dashboard - Day {{ current_day }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    {% if message %}
+        <p style="color:#ff5300;">{{ message }}</p>
+    {% endif %}
+    <h2>Add Player</h2>
+    <form method="POST" style="margin-bottom:15px;">
+        <input type="hidden" name="action" value="add">
+        <input type="text" name="new_name" placeholder="Player name" required>
+        <input type="submit" value="Add">
+    </form>
+</div>
+<div class="card">
+    <h2>Delete Player</h2>
+    <form method="POST" style="margin-bottom:15px;">
+        <input type="hidden" name="action" value="delete">
+        <select name="delete_name">
+            {% for p in players %}
+                <option value="{{ p.name }}">{{ p.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Delete">
+    </form>
+</div>
+<div class="card">
+    <h2>Reset Round &amp; Archive Results</h2>
+    <form method="POST">
+        <input type="hidden" name="action" value="reset">
+        <input type="submit" value="Reset &amp; Next Day">
+    </form>
+    <p style="margin-top:10px; font-size:0.9em; color:#ccc;">
+        Resetting will save the top five for the current day and begin the next round. After Day 3 the votes for Day 3 are simply cleared.
+    </p>
+</div>
+<div class="card">
+    <h2>History</h2>
+    {% for day, results in history.items() %}
+        <h3 style="margin-top:15px;">{{ day|capitalize }}</h3>
+        {% if results %}
+            <table class="results-table" style="width:100%; border-collapse:collapse; color:white;">
+                <thead>
+                    <tr>
+                        <th style="text-align:left; padding:8px;">Rank</th>
+                        <th style="text-align:left; padding:8px;">Name</th>
+                        <th style="text-align:left; padding:8px;">Votes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in results %}
+                        <tr style="background-color:{% if loop.index0 % 2 == 0 %}#444{% else %}#3b3b3b{% endif %};">
+                            <td style="padding:8px;">{{ loop.index }}</td>
+                            <td style="padding:8px;">{{ item.name }}</td>
+                            <td style="padding:8px;">{{ item.votes }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No results saved for this day.</p>
+        {% endif %}
+    {% endfor %}
+</div>
+<div class="card">
+    <p><a href="{{ url_for('logout') }}" class="link-light">Log out</a></p>
+    <p><a href="{{ url_for('index') }}" class="link-light">Back to voting</a></p>
+</div>
+{% endblock %}

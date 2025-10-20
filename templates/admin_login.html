@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Login{% endblock %}
+
+{% block header %}Admin Login{% endblock %}
+
+{% block content %}
+<div class="card">
+    {% if error %}
+        <p style="color:#ff5300;">{{ error }}</p>
+    {% endif %}
+    <form method="POST">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password">
+        <input type="submit" value="Login">
+    </form>
+    <p style="margin-top:10px;"><a href="{{ url_for('index') }}" class="link-light">Back to voting</a></p>
+</div>
+{% endblock %}
